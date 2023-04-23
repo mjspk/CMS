@@ -1,0 +1,48 @@
+version: '3'
+services:
+  nginx:
+    image: mjspk/cms_nginx:latest
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8660:8660"
+
+  mysql:
+    image: "mysql:latest"
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mypassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword      
+  api:
+    image: mjspk/cms_api:latest
+    depends_on:
+      - mysql
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=myuser
+      - MYSQL_PASSWORD=mypassword
+      - MYSQL_DATABASE=mydb
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_PASSWORD=mypassword
+      - MYSQL_ROOT_USER=root
+
+  client:
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    image: mjspk/cms_client:latest
+    build:
+      context: ./client
+      dockerfile: Dockerfile

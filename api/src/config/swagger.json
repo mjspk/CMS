@@ -1,0 +1,246 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "2.0.0",
+        "title": "Contacts API",
+        "description": "THis api is for contacts",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:5000",
+    "basePath": "/v1",
+    "tags": [
+        {
+            "name": "contacts"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/contacts": {
+            "get": {
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Get all contacts",
+                "description": "Returns all contacts",
+                "operationId": "getContacts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit of the contacts",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset of the contacts",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Contact"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contacts/search": {
+            "get": {
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Search contacts",
+                "description": "Search contacts",
+                "operationId": "searchContacts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "searchTerm",
+                        "in": "query",
+                        "description": "Name of the contact",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit of the contacts",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset of the contacts",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Contact"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contact": {
+            "get": {
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Get contact by id",
+                "description": "Returns a contact",
+                "operationId": "getContactById",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the contact",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Contact"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Add a new contact",
+                "description": "Add a new contact",
+                "operationId": "addContact",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Contact"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Contact"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Update contact by id",
+                "description": "Update a contact",
+                "operationId": "updateContactById",
+                "produces": [
+                    "application/json"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Contact"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Contact"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Delete contact by id",
+                "description": "Delete a contact",
+                "operationId": "deleteContactById",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the contact",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Contact": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
