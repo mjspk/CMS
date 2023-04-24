@@ -1,3 +1,4 @@
+require('dotenv').config();
 
 export interface Config {
     SERVER_URL: string;
@@ -15,7 +16,6 @@ export interface Config {
     EMAIL_USER: string;
     EMAIL_PASSWORD: string;
 }
-require('dotenv').config();
 // load environment variables from .env file
 const serverConfig: Config = {
     SERVER_URL: process.env.SERVER_URL,

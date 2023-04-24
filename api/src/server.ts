@@ -5,7 +5,6 @@ import swaggerUi from 'swagger-ui-express';
 import routes from './routes';
 const swaggerDocument = require('./config/swagger.json');
 import serverConfig from './config/ServerConfig';
-
 import "reflect-metadata"
 
 
