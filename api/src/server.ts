@@ -4,7 +4,7 @@ import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import routes from './routes';
 const swaggerDocument = require('./config/swagger.json');
-import serverConfig from './config/serverConfig';
+import serverConfig from './config/ServerConfig';
 
 import "reflect-metadata"
 
@@ -12,6 +12,7 @@ import "reflect-metadata"
 dotenv.config();
 
 let api: any;
+// the server object is responsible for starting and stopping the server
 const server = {
     launchServer() {
         return new Promise<void>((resolve, reject) => {
@@ -27,7 +28,7 @@ const server = {
                         next();
                     }
                 });
-
+                // only enable swagger documentation in development mode
                 if (serverConfig.NODE_ENV === 'development') {
                     app.use(
                         serverConfig.BASE_PATH + '/docs',
@@ -36,6 +37,7 @@ const server = {
                     );
                     console.log(`Swagger documentation is available at http://localhost:${serverConfig.API_PORT}${serverConfig.BASE_PATH}/docs`)
                 }
+                // enable CORS
                 app.use(cors());
                 app.use(String(serverConfig.BASE_PATH), routes);
                 api = app.listen(serverConfig.API_PORT, () => {
@@ -56,7 +58,7 @@ const server = {
 };
 
 export default server;
-
+// shutDownServer is a helper function that shuts down the server
 function shutDownServer() {
     if (api) {
         console.log("Server is shutting down...");

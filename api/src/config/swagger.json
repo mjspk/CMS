@@ -149,16 +149,20 @@
                 "summary": "Add a new contact",
                 "description": "Add a new contact",
                 "operationId": "addContact",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/definitions/Contact"
-                            }
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Contact",
+                        "in": "body",
+                        "description": "Contact to update",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Contact"
                         }
-                    },
-                    "required": true
-                },
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -178,16 +182,17 @@
                 "produces": [
                     "application/json"
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/definitions/Contact"
-                            }
+                "parameters": [
+                    {
+                        "name": "Contact",
+                        "in": "body",
+                        "description": "Contact to update",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Contact"
                         }
-                    },
-                    "required": true
-                },
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -222,6 +227,37 @@
                     }
                 }
             }
+        },
+        "/contact/email": {
+            "post": {
+                "tags": [
+                    "contacts"
+                ],
+                "summary": "Send email to contact",
+                "description": "Send email to contact",
+                "operationId": "sendEmailToContact",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "EmailMessage",
+                        "in": "body",
+                        "description": "Message to send",
+                        "required": true,
+                        "type": "object",
+                        "schema": {
+                            "$ref": "#/definitions/EmailMessage"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "type": "boolean"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -238,6 +274,26 @@
                     "type": "string"
                 },
                 "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "EmailMessage": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "from_email": {
+                    "type": "string"
+                },
+                "to_email": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 }
             }

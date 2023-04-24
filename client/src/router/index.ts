@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Contacts from '../views/Contacts.vue'
+import About from '../views/About.vue'
 import ContactDetails from '../views/ContactDetails.vue'
 
 const routes = [
@@ -7,6 +8,12 @@ const routes = [
         path: '/',
         name: 'Contacts',
         component: Contacts
+    },
+    {
+        path: '/about',
+        name: 'About',
+        component: About
+
     },
     {
         path: '/contact/:id',
@@ -17,7 +24,7 @@ const routes = [
 
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
+    history: createWebHistory(),
     routes
 })
 

@@ -3,7 +3,7 @@ import { ContactController } from '../controllers/ContactController';
 
 const contactRouter = express.Router();
 const contactController = new ContactController();
-
+// routes for /contacts and /contact endpoints
 contactRouter.get("/contacts", contactController.getAllContacts);
 contactRouter.get("/contacts/search", contactController.searchContacts);
 contactRouter.get("/contact", contactController.getContactById);

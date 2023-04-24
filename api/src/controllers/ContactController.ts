@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ContactRepository } from "../dao/repos/ContactRepository";
 
-
+// ContactController contains all the methods for handling requests to the /contacts and /contact endpoints
 export class ContactController {
     async getAllContacts(req: Request, res: Response) {
         const contactRepository = new ContactRepository();

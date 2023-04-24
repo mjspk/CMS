@@ -2,6 +2,7 @@ import { AppDataSource } from "../DataSource";
 import { Contact } from "../../entities/Contact";
 import { Like } from "typeorm";
 
+// the ContactRepository class is responsible for all database operations involving the Contact entity
 export class ContactRepository {
 
     async getAllContacts( limit: number, offset: number) {

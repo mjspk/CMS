@@ -1,51 +1,74 @@
 <template>
-    <div>
-        <h1>Contact Details</h1>
-        <div class="card">
-            <div class="card-body" >
-                <h5 class="card-title" v-bind="contact?.name"></h5>
-                <p class="card-text" v-bind="contact?.email"></p>
-                <p class="card-text" v-bind="contact?.phone"></p>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                    <button class="btn btn-primary"> <i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-danger"> <i class="bi bi-trash"></i></button>
+    <div class="container mt-4">
+        <div v-if="contact">
+            <h1>Contact Details</h1>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ contact.name }}</h5>
+                    <p class="card-text">{{ contact.email }}</p>
+                    <p class="card-text">{{ contact.phone }}</p>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button class="btn btn-primary" @click="editContact(contact)"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-danger" @click="deleteContact(contact)"> <i class="bi bi-trash"></i></button>
+                        <button class="btn btn-primary" @click="composeEmail(contact)"><i class="bi bi-envelope"></i></button>
+                    </div>
                 </div>
+
             </div>
         </div>
-
-
-
     </div>
 </template>
 
 <script lang="ts">
+import { Contact } from '@/models/Contact'
+import { ContactHelper } from '@/helpers/ContactHelper';
+import { defineComponent } from 'vue';
 
-import { Vue } from 'vue-class-component';
-import { Contact } from '@/models/contact'
-import { ContactService } from '@/services/cotactsService';
-import Swal from 'sweetalert2'
-
-export default class ContactDetails extends Vue {
- 
-
-    private contactService: ContactService = new ContactService();
-    public contact: Contact | undefined = undefined;
-    mounted(): void {
+export default defineComponent({
+    name: 'ContactDetails',
+    data() {
+        return {
+            contact: {} as Contact,
+        };
+    },
+    mounted() {
         this.getContact();
-    }
-
-    getContact(): void {
-        const id = this.$route.params.id == undefined ? 0 : Number(this.$route.params.id);
-        this.contactService.getContactById(id).then((contact: Contact) => {
-            this.contact = contact;
-            
-        });
-    }
-
-}
-
-
-
+    },
+    watch: {
+        $route() {
+            this.getContact();
+        },
+    },
+    methods: {
+        async getContact() {
+            const id = this.$route.params.id == undefined ? 0 : Number(this.$route.params.id);
+            this.contact = await ContactHelper.getInstance().getContactById(id);
+            console.log(this.contact);
+        },
+        async editContact(contact: Contact) {
+            await ContactHelper.getInstance().editContact(contact);
+            this.getContact();
+        },
+        async deleteContact(contact: Contact) {
+            await ContactHelper.getInstance().deleteContact(contact);
+            this.$router.back();
+        },
+        async composeEmail(contact: Contact) {
+            await ContactHelper.getInstance().composeEmail(contact);
+        },
+    },
+});
 </script>
 
+<style scoped>
+.card {
+    margin: 0 auto;
+    padding: 20px;
+}
 
+@media (min-width: 768px) {
+    .card {
+        width: 50%;
+    }
+}
+</style>

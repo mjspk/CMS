@@ -2,19 +2,19 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
 
 // the Contact entity class is responsible for defining the Contact entity
 @Entity()
-export class Contact {
+export class EmailMessage {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    name: string;
+    from_email: string;
 
     @Column()
-    email: string;
+    to_email: string;
 
     @Column()
-    phone: string;
+    subject: string;
+
+    @Column()
+    message: string;
 }
-
-
-
