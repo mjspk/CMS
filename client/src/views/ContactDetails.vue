@@ -10,7 +10,8 @@
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button class="btn btn-primary" @click="editContact(contact)"><i class="bi bi-pencil"></i></button>
                         <button class="btn btn-danger" @click="deleteContact(contact)"> <i class="bi bi-trash"></i></button>
-                        <button class="btn btn-primary" @click="composeEmail(contact)"><i class="bi bi-envelope"></i></button>
+                        <button class="btn btn-primary" @click="composeEmail(contact)"><i
+                                class="bi bi-envelope"></i></button>
                     </div>
                 </div>
 
@@ -46,12 +47,16 @@ export default defineComponent({
             console.log(this.contact);
         },
         async editContact(contact: Contact) {
-            await ContactHelper.getInstance().editContact(contact);
-            this.getContact();
+            const result=await ContactHelper.getInstance().editContact(contact);
+            if (result) {
+                  this.getContact();
+            }
         },
         async deleteContact(contact: Contact) {
-            await ContactHelper.getInstance().deleteContact(contact);
-            this.$router.back();
+            const result = await ContactHelper.getInstance().deleteContact(contact);
+            if (result) {
+                this.$router.back();
+            }
         },
         async composeEmail(contact: Contact) {
             await ContactHelper.getInstance().composeEmail(contact);

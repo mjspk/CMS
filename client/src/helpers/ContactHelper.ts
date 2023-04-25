@@ -62,7 +62,7 @@ export class ContactHelper {
     }
 
 
-    async editContact(contact: Contact): Promise<void> {
+    async editContact(contact: Contact): Promise<boolean> {
         await Swal.fire({
             title: 'Edit Contact',
             html: '<input id="swal-input1" class="swal2-input" placeholder="Name" value="' + contact.name + '">' +
@@ -88,11 +88,13 @@ export class ContactHelper {
                     phone: result.value[2]
                 };
                 await this.contactService.updateContact(newContact);
+                return true;
             }
         });
+        return false;
     }
 
-    async deleteContact(contact: Contact): Promise<void> {
+    async deleteContact(contact: Contact): Promise<boolean> {
         await Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -109,8 +111,10 @@ export class ContactHelper {
                     'Your file has been deleted.',
                     'success'
                 )
+                return true;
             }
         });
+        return false;
     }
 
     // compose an email

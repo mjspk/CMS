@@ -21,7 +21,8 @@
                   <button class="btn btn-primary" @click.stop="editContact(contact)"><i class="bi bi-pencil"></i></button>
                   <button class="btn btn-danger" @click.stop="deleteContact(contact)"> <i
                       class="bi bi-trash"></i></button>
-                  <button class="btn btn-primary" @click.stop="composeEmail(contact)"><i class="bi bi-envelope"></i></button>
+                  <button class="btn btn-primary" @click.stop="composeEmail(contact)"><i
+                      class="bi bi-envelope"></i></button>
                 </div>
               </div>
             </div>
@@ -79,14 +80,18 @@ export default class Contacts extends Vue {
   }
 
   async editContact(contact: Contact): Promise<void> {
-    await this.contactHelper.editContact(contact);
-    this.getContacts();
+    const result = await this.contactHelper.editContact(contact);
+    if (result) {
+      this.getContacts();
+    }
 
   }
 
   async deleteContact(contact: Contact): Promise<void> {
-    await this.contactHelper.deleteContact(contact);
-    this.getContacts();
+    const result = await this.contactHelper.deleteContact(contact);
+    if (result) {
+      this.getContacts();
+    }
   }
 
   async composeEmail(contact: Contact): Promise<void> {
